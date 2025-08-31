@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipos y Mantenimiento PTG</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Equipos y Mantenimiento PTG</h1>
+        </header>
+
+        <form id="equipmentForm" class="form-container">
+            <!-- Datos del Operador -->
+            <div class="form-group">
+                <label for="operatorName">Nombre y Apellido del Operador</label>
+                <input type="text" id="operatorName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="legajo">Legajo</label>
+                <input type="text" id="legajo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="dateTime">Fecha y Hora</label>
+                <input type="datetime-local" id="dateTime" required readonly>
+            </div>
+
+            <!-- Tipo de Equipo -->
+            <div class="form-group">
+                <label for="equipmentType">Tipo de Equipo</label>
+                <select id="equipmentType" required>
+                    <option value="">Seleccione un tipo de equipo</option>
+                    <option value="Motocompresor">Motocompresor</option>
+                    <option value="Recompresor">Recompresor</option>
+                    <option value="Turbo Expansor">Turbo Expansor</option>
+                    <option value="Bomba">Bomba</option>
+                    <option value="Separador">Separador</option>
+                    <option value="Intercambiador">Intercambiador</option>
+                    <option value="Filtro">Filtro</option>
+                    <option value="Puente de Medición">Puente de Medición</option>
+                    <option value="Torre">Torre</option>
+                    <option value="Horno">Horno</option>
+                    <option value="Aero Enfriador">Aero Enfriador</option>
+                    <option value="Compresor de Aire">Compresor de Aire</option>
+                    <option value="Válvula">Válvula</option>
+                    <option value="Fosa">Fosa</option>
+                    <option value="Tanques">Tanques</option>
+                    <option value="Ablandador">Ablandador</option>
+                    <option value="Cisterna">Cisterna</option>
+                    <option value="CCM">CCM</option>
+                    <option value="Shelter">Shelter</option>
+                    <option value="Detectores y Pulsadores">Detectores y Pulsadores</option>
+                    <option value="Compresores de Propano">Compresores de Propano</option>
+                    <option value="Regenerador">Regenerador</option>
+                    <option value="Cromatógrafo">Cromatógrafo</option>
+                    <option value="Flare">Flare</option>
+                    <option value="RCI">RCI</option>
+                    <option value="Iluminación">Iluminación</option>
+                    <option value="Tableros eléctricos">Tableros eléctricos</option>
+                    <option value="Otros Equipos o Instalaciones">Otros Equipos o Instalaciones</option>
+                </select>
+            </div>
+
+            <!-- Campos Generales (ocultos para tanques) -->
+            <div id="generalFields">
+                <div class="form-group">
+                    <label for="tagNumber">Número de TAG</label>
+                    <input type="text" id="tagNumber">
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Ubicación</label>
+                    <input type="text" id="location">
+                </div>
+
+                <div class="form-group">
+                    <label for="equipmentStatus">Estado del Equipo</label>
+                    <select id="equipmentStatus">
+                        <option value="">Seleccione el estado</option>
+                        <option value="En Servicio">En Servicio</option>
+                        <option value="Fuera de Servicio">Fuera de Servicio</option>
+                        <option value="En Mantenimiento">En Mantenimiento</option>
+                        <option value="Stand by">Stand by</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="observations">Observaciones</label>
+                    <textarea id="observations" rows="4" placeholder="Escriba sus observaciones aquí..."></textarea>
+                </div>
+            </div>
+
+            <!-- Campos específicos para Tanques -->
+            <div id="tankFields" style="display: none;">
+                <div class="tanks-container">
+                    <!-- Tanque 1 -->
+                    <div class="tank-group">
+                        <h3>Tanque 1 (Propano Fuera de Especificación)</h3>
+                        <div class="tank-inputs">
+                            <div class="form-group">
+                                <label for="tank1Level">Nivel (cm)</label>
+                                <input type="number" id="tank1Level" step="0.1" placeholder="Nivel">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank1Pressure">Presión (kg/cm²)</label>
+                                <input type="number" id="tank1Pressure" step="0.01" placeholder="Presión">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank1Temperature">Temperatura (°C)</label>
+                                <input type="number" id="tank1Temperature" step="0.1" placeholder="Temperatura">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tanque 2 -->
+                    <div class="tank-group">
+                        <h3>Tanque 2 (Butano Fuera de Especificación)</h3>
+                        <div class="tank-inputs">
+                            <div class="form-group">
+                                <label for="tank2Level">Nivel (cm)</label>
+                                <input type="number" id="tank2Level" step="0.1" placeholder="Nivel">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank2Pressure">Presión (kg/cm²)</label>
+                                <input type="number" id="tank2Pressure" step="0.01" placeholder="Presión">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank2Temperature">Temperatura (°C)</label>
+                                <input type="number" id="tank2Temperature" step="0.1" placeholder="Temperatura">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tanque 3 -->
+                    <div class="tank-group">
+                        <h3>Tanque 3 (Butano)</h3>
+                        <div class="tank-inputs">
+                            <div class="form-group">
+                                <label for="tank3Level">Nivel (cm)</label>
+                                <input type="number" id="tank3Level" step="0.1" placeholder="Nivel">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank3Pressure">Presión (kg/cm²)</label>
+                                <input type="number" id="tank3Pressure" step="0.01" placeholder="Presión">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank3Temperature">Temperatura (°C)</label>
+                                <input type="number" id="tank3Temperature" step="0.1" placeholder="Temperatura">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tanque 4 -->
+                    <div class="tank-group">
+                        <h3>Tanque 4 (Butano)</h3>
+                        <div class="tank-inputs">
+                            <div class="form-group">
+                                <label for="tank4Level">Nivel (cm)</label>
+                                <input type="number" id="tank4Level" step="0.1" placeholder="Nivel">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank4Pressure">Presión (kg/cm²)</label>
+                                <input type="number" id="tank4Pressure" step="0.01" placeholder="Presión">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank4Temperature">Temperatura (°C)</label>
+                                <input type="number" id="tank4Temperature" step="0.1" placeholder="Temperatura">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tanque 5 -->
+                    <div class="tank-group">
+                        <h3>Tanque 5 (Propano)</h3>
+                        <div class="tank-inputs">
+                            <div class="form-group">
+                                <label for="tank5Level">Nivel (cm)</label>
+                                <input type="number" id="tank5Level" step="0.1" placeholder="Nivel">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank5Pressure">Presión (kg/cm²)</label>
+                                <input type="number" id="tank5Pressure" step="0.01" placeholder="Presión">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank5Temperature">Temperatura (°C)</label>
+                                <input type="number" id="tank5Temperature" step="0.1" placeholder="Temperatura">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tanque 6 -->
+                    <div class="tank-group">
+                        <h3>Tanque 6 (Propano)</h3>
+                        <div class="tank-inputs">
+                            <div class="form-group">
+                                <label for="tank6Level">Nivel (cm)</label>
+                                <input type="number" id="tank6Level" step="0.1" placeholder="Nivel">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank6Pressure">Presión (kg/cm²)</label>
+                                <input type="number" id="tank6Pressure" step="0.01" placeholder="Presión">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank6Temperature">Temperatura (°C)</label>
+                                <input type="number" id="tank6Temperature" step="0.1" placeholder="Temperatura">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tanque 7 -->
+                    <div class="tank-group">
+                        <h3>Tanque 7 (Gasolina)</h3>
+                        <div class="tank-inputs">
+                            <div class="form-group">
+                                <label for="tank7Level">Nivel (cm)</label>
+                                <input type="number" id="tank7Level" step="0.1" placeholder="Nivel">
+                            </div>
+                            <div class="form-group">
+                                <label>Presión (kg/cm²)</label>
+                                <input type="text" value="N/A - Solo nivel" readonly style="background: #f5f5f5;">
+                            </div>
+                            <div class="form-group">
+                                <label>Temperatura (°C)</label>
+                                <input type="text" value="N/A - Solo nivel" readonly style="background: #f5f5f5;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carga de Fotos -->
+            <div class="form-group" id="photoSection">
+                <label>Fotografías (máximo 3)</label>
+                <div class="photo-container">
+                    <input type="file" id="photoInput" accept="image/*" capture="camera" style="display: none;">
+                    <button type="button" id="takePhotoBtn" class="photo-btn">
+                        📷 Tomar Foto
+                    </button>
+                    <div id="photoPreview" class="photo-preview"></div>
+                </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="form-actions">
+                <button type="button" id="generateReportBtn" class="btn-primary">
+                    📄 Generar Informe PDF
+                </button>
+                <button type="button" id="shareReportBtn" class="btn-share" style="display: none;">
+                    📱 Compartir PDF
+                </button>
+                <button type="button" id="resetBtn" class="btn-secondary">
+                    🔄 Resetear App
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
