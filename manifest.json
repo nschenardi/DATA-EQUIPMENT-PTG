@@ -1,7 +1,7 @@
 {
   "name": "Carga Técnica E&M",
   "short_name": "E&M",
-  "start_url": "/",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#0d2545",
   "theme_color": "#0d2545",
@@ -18,4 +18,5 @@
     }
   ]
 }
+
 
