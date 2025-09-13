@@ -850,31 +850,72 @@ class PTGApp {
         
         return yPosition;
     }
+    addTurboExpanderDataFieldsToPDF(doc, data, yPosition, lineHeight) {
+    doc.setFont('helvetica', 'bold');
+    doc.text('PLANILLAS DATOS TURBOEXPANDER', 20, yPosition);
+    yPosition += lineHeight * 2;
     
-    addTurboExpanderDataToPDF(doc, data, yPosition, lineHeight) {
-        doc.setFont('helvetica', 'bold');
-        doc.text('TURBO EXPANSOR', 20, yPosition);
-        yPosition += lineHeight;
-        
-        doc.setFont('helvetica', 'normal');
-        Object.entries(data).forEach(([key, value]) => {
-            if (value) {
-                const label = this.getFieldLabel(key);
-                if (key === 'observations') {
-                    doc.text(`${label}:`, 20, yPosition);
-                    yPosition += lineHeight;
-                    const splitText = doc.splitTextToSize(value, 170);
-                    doc.text(splitText, 20, yPosition);
-                    yPosition += splitText.length * lineHeight;
-                } else {
-                    doc.text(`${label}: ${value}`, 20, yPosition);
-                    yPosition += lineHeight;
-                }
+    doc.setFont('helvetica', 'normal');
+    
+    // TODOS los campos del TurboExpander
+    const turboFields = {
+        expInP: 'Presión Entrada Expansor (PIC 301B)',
+        expInT: 'Temperatura Entrada Expansor (TI0314)',
+        expOutP: 'Presión Salida Expansor (PIC 306)',
+        expOutT: 'Temperatura Salida Expansor (TI0326)',
+        expWheelP: 'Presión Rueda Expansor',
+        compInP: 'Presión Entrada Compresor',
+        compInT: 'Temperatura Entrada Compresor',
+        compOutP: 'Presión Salida Compresor',
+        compOutT: 'Temperatura Salida Compresor',
+        compWheelP: 'Presión Rueda Compresor',
+        driveBearingThrust: 'Presión Empuje Expansor',
+        loadBearingThrust: 'Presión Empuje Compresor',
+        reservoirP: 'Presión Reservorio',
+        reservoirT: 'Temperatura Reservorio',
+        lubeOilP: 'Presión Aceite Lubricante',
+        lubeOilDP: 'Diferencia Presión Aceite Lubricante',
+        sealGasP: 'Presión Gas de Sello',
+        sealGasDP: 'Diferencia Presión Gas de Sello',
+        rpm: 'RPM',
+        expBrgT: 'Temperatura Cojinetes Expansor',
+        compBrgT: 'Temperatura Cojinetes Compresor',
+        expVibX: 'Vibración X Expansor',
+        compVibX: 'Vibración X Compresor',
+        lubeOilInT: 'Temperatura Entrada Aceite Lubricante',
+        oilDrainT: 'Temperatura Aceite Drenaje',
+        sealGasInT: 'Temperatura Entrada Gas de Sello',
+        pic0301B: '% Aletas Guías',
+        pic0301A: 'JT %',
+        recycleFIC0301: 'Reciclo FIC0301',
+        fIC0301Opening: 'Porcentaje apertura FIC0301',
+        flowPercentage: 'Valor de caudal (porcentaje)',
+        expFlowFIC0101: 'Flujo Expansor',
+        compFlow: 'Flujo Compresor',
+        ambientTempTI0100: 'T° Ambiente',
+        sealGasSupplyP: 'Presión Suministro Gas de Sello',
+        sealGasSupplyT: 'T° Suministro Gas de Sello',
+        sealGasFlowFI1: 'Caudal Gas de Sello FI-1',
+        reservoirOilLevel: 'Nivel Aceite Reservorio',
+        flowMMSCFD: 'Caudal (MMSCFD)'
+    };
+    
+    Object.entries(turboFields).forEach(([key, label]) => {
+        if (data[key] && data[key] !== '') {
+            doc.text(`${label}: ${data[key]}`, 20, yPosition);
+            yPosition += lineHeight;
+            
+            // Nueva página si es necesario
+            if (yPosition > 270) {
+                doc.addPage();
+                yPosition = 20;
             }
-        });
-        
-        return yPosition + lineHeight;
-    }
+        }
+    });
+    
+    return yPosition + lineHeight;
+}
+    
     
     addPropaneCompressorDataToPDF(doc, data, yPosition, lineHeight) {
         doc.setFont('helvetica', 'bold');
@@ -1198,3 +1239,4 @@ window.takePhoto = function(type) {
     }
 
 };
+
