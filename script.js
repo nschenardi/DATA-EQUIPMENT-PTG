@@ -18,7 +18,7 @@ class PTGApp {
         };
         
         // URL del Google Apps Script - REEMPLAZAR con tu URL real después del despliegue
-        this.APPS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+        this.APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzo0kMS607QqXMO2nZLKRwUO6nfQDXpc8ZrsgoPMJ45JKHxSwVKiC0PiLZxUmC_tyle/exec';
         
         this.init();
     }
@@ -1196,4 +1196,5 @@ window.takePhoto = function(type) {
     if (window.app) {
         window.app.takePhoto(type);
     }
+
 };
