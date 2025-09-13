@@ -18,7 +18,7 @@ class PTGApp {
         };
         
         // URL de la aplicación web de App Script
-        this.appScriptUrl = 'https://script.google.com/macros/s/AKfycby1YUaIcdpf21MQjuvsi3DbHMM0x1NXMcOdB7PUo1E8WJWv7PLguJAJsnO9MrSilR8e/exec';
+        this.appScriptUrl = 'https://script.google.com/macros/s/AKfycbyaOgY5yjBNuIyII1mb8dPLqFnB5T3I8fqsNayYceKGlGzyICcJvpJMCsHeefeEXaKy/exec';
         
         this.init();
     }
@@ -1144,4 +1144,5 @@ window.takePhoto = function(type) {
     if (window.app) {
         window.app.takePhoto(type);
     }
+
 };
