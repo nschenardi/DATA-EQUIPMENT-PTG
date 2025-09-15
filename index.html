@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipos y Mantenimiento PTG</title>
+    <link rel="stylesheet" href="styles.css">
+	<link rel="manifest" href="manifest.json">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Equipos y Mantenimiento PTG</h1>
+        </header>
+
+        <div class="form-container">
+            <div class="form-group">
+                <label for="operatorName">Nombre y Apellido del Operador</label>
+                <input type="text" id="operatorName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="legajo">Legajo</label>
+                <input type="text" id="legajo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="dateTime">Fecha y Hora</label>
+                <input type="datetime-local" id="dateTime" required>
+            </div>
+
+            <div class="form-group">
+                <label for="equipmentType">Tipo de Equipo</label>
+                <select id="equipmentType" required>
+                    <option value="">Seleccione un tipo de equipo</option>
+                    <option value="Motocompresor">Motocompresor</option>
+                    <option value="Recompresor">Recompresor</option>
+                    <option value="Turbo Expansor">Turbo Expansor</option>
+                    <option value="Bomba">Bomba</option>
+                    <option value="Separador">Separador</option>
+                    <option value="Intercambiador">Intercambiador</option>
+                    <option value="Filtro">Filtro</option>
+                    <option value="Puente de MediciÃ³n">Puente de MediciÃ³n</option>
+                    <option value="Torre">Torre</option>
+                    <option value="Horno">Horno</option>
+                    <option value="Aero Enfriador">Aero Enfriador</option>
+                    <option value="Compresor de Aire">Compresor de Aire</option>
+                    <option value="VÃ¡lvula">VÃ¡lvula</option>
+                    <option value="Fosa">Fosa</option>
+                    <option value="Tanques">Tanques</option>
+                    <option value="Ablandador">Ablandador</option>
+                    <option value="Cisterna">Cisterna</option>
+                    <option value="CCM">CCM</option>
+                    <option value="Shelter">Shelter</option>
+                    <option value="Detectores y Pulsadores">Detectores y Pulsadores</option>
+                    <option value="Compresores de Propano">Compresores de Propano</option>
+                    <option value="Regenerador">Regenerador</option>
+                    <option value="CromatÃ³grafo">CromatÃ³grafo</option>
+                    <option value="Flare">Flare</option>
+                    <option value="RCI">RCI</option>
+                    <option value="IluminaciÃ³n">IluminaciÃ³n</option>
+                    <option value="Tableros elÃ©ctricos">Tableros elÃ©ctricos</option>
+                    <option value="Sala de Control">Sala de Control</option>
+                    <option value="Otros Equipos o Instalaciones">Otros Equipos o Instalaciones</option>
+                    <option value="Carga de Aceite Motocompresores y Recompresores">Carga de Aceite Motocompresores y Recompresores</option>
+                    <option value="Prueba Semanal de RCI">Prueba Semanal de RCI</option>
+                    <option value="Planillas Datos Motocompresores">Planillas Datos Motocompresores</option>
+                    <option value="Planillas Datos Recompresores">Planillas Datos Recompresores</option>
+                    <option value="Planillas Datos TurboExpander">Planillas Datos TurboExpander</option>
+                    <option value="Planillas Datos Frick K-401">Planillas Datos Frick K-401</option>
+                </select>
+            </div>
+
+            <div id="generalFields" style="display: none;">
+                <div class="form-group">
+                    <label for="tagNumber">NÃºmero de TAG</label>
+                    <input type="text" id="tagNumber">
+                </div>
+
+                <div class="form-group">
+                    <label for="priority">Prioridad</label>
+                    <select id="priority">
+                        <option value="">Seleccione prioridad</option>
+                        <option value="Urgente">Urgente - ventana de ejecuciÃ³n: Inmediato</option>
+                        <option value="Alta">Alta - ventana de ejecuciÃ³n: 2 dÃ­as a 2 semanas</option>
+                        <option value="Media">Media - ventana de ejecuciÃ³n: 2 semanas a 2 meses</option>
+                        <option value="Paro de Planta">Paro de Planta - ventana de ejecuciÃ³n: Parada de Planta</option>
+                        <option value="Bajo">Bajo - ventana de ejecuciÃ³n: > 2 meses</option>
+                        <option value="Plan de Mantenimiento">Plan de Mantenimiento - ventana de ejecuciÃ³n: Plan de Mantenimiento</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">UbicaciÃ³n</label>
+                    <input type="text" id="location">
+                </div>
+
+                <div class="form-group">
+                    <label for="equipmentStatus">Estado del Equipo</label>
+                    <select id="equipmentStatus">
+                        <option value="">Seleccione el estado</option>
+                        <option value="En Servicio">En Servicio</option>
+                        <option value="Fuera de Servicio">Fuera de Servicio</option>
+                        <option value="En Mantenimiento">En Mantenimiento</option>
+                        <option value="Stand by">Stand by</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="observations">Observaciones</label>
+                    <textarea id="observations"></textarea>
+                </div>
+
+                <div class="form-group photo-container">
+                    <label>FotografÃ­as (mÃ¡ximo 3)</label>
+                    <button type="button" class="photo-btn" onclick="app.takePhoto('general')">ðŸ"· Tomar Foto</button>
+                    <input type="file" id="generalPhotoInput" accept="image/*" capture="camera" multiple style="display: none;">
+                    <div id="generalPhotoPreview" class="photo-preview"></div>
+                </div>
+            </div>
+			<div id="controlRoomFields" style="display: none;">
+                <div class="form-group">
+                    <label for="controlRoomTagNumber">NÃºmero de TAG</label>
+                    <input type="text" id="controlRoomTagNumber">
+                </div>
+
+                <div class="form-group">
+                    <label for="priorityControlRoom">Prioridad</label>
+                    <select id="priorityControlRoom">
+                        <option value="">Seleccione prioridad</option>
+                        <option value="Urgente">Urgente - ventana de ejecuciÃ³n: Inmediato</option>
+                        <option value="Alta">Alta - ventana de ejecuciÃ³n: 2 dÃ­as a 2 semanas</option>
+                        <option value="Media">Media - ventana de ejecuciÃ³n: 2 semanas a 2 meses</option>
+                        <option value="Paro de Planta">Paro de Planta - ventana de ejecuciÃ³n: Parada de Planta</option>
+                        <option value="Bajo">Bajo - ventana de ejecuciÃ³n: > 2 meses</option>
+                        <option value="Plan de Mantenimiento">Plan de Mantenimiento - ventana de ejecuciÃ³n: Plan de Mantenimiento</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="controlRoomStatus">Estado del Equipo</label>
+                    <select id="controlRoomStatus">
+                        <option value="">Seleccione el estado</option>
+                        <option value="En Servicio">En Servicio</option>
+                        <option value="Fuera de Servicio">Fuera de Servicio</option>
+                        <option value="En Mantenimiento">En Mantenimiento</option>
+                        <option value="Stand by">Stand by</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="controlRoomObservations">Observaciones</label>
+                    <textarea id="controlRoomObservations"></textarea>
+                </div>
+
+                <div class="form-group photo-container">
+                    <label>FotografÃ­as (mÃ¡ximo 3)</label>
+                    <button type="button" class="photo-btn" onclick="app.takePhoto('controlRoom')">ðŸ"· Tomar Foto</button>
+                    <input type="file" id="controlRoomPhotoInput" accept="image/*" capture="camera" multiple style="display: none;">
+                    <div id="controlRoomPhotoPreview" class="photo-preview"></div>
+                </div>
+            </div>
+			            <div id="tankFields" style="display: none;">
+                <div class="tanks-container">
+                    <div class="tank-group">
+                        <div class="tank-header">
+                            <h3>Tanque 1 (Propano Fuera de EspecificaciÃ³n)</h3>
+                            <div class="loading-status">
+                                <input type="checkbox" id="tank1Loading">
+                                <label for="tank1Loading">En Carga</label>
+                            </div>
+                        </div>
+                        <div class="tank-inputs">
+                            <div class="form-group">
+                                <label for="tank1Level">Nivel (cm)</label>
+                                <input type="number" id="tank1Level" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank1Pressure">PresiÃ³n (kg/cmÂ²)</label>
+                                <input type="number" id="tank1Pressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank1Temperature">Temperatura (Â°C)</label>
+                                <input type="number" id="tank1Temperature" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tank-group">
+                        <div class="tank-header">
+                            <h3>Tanque 2 (Butano Fuera de EspecificaciÃ³n)</h3>
+                            <div class="loading-status">
+                                <input type="checkbox" id="tank2Loading">
+                                <label for="tank2Loading">En Carga</label>
+                            </div>
+                        </div>
+                        <div class="tank-inputs">
+                            <div class="form-group">
+                                <label for="tank2Level">Nivel (cm)</label>
+                                <input type="number" id="tank2Level" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank2Pressure">PresiÃ³n (kg/cmÂ²)</label>
+                                <input type="number" id="tank2Pressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank2Temperature">Temperatura (Â°C)</label>
+                                <input type="number" id="tank2Temperature" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tank-group">
+                        <div class="tank-header">
+                            <h3>Tanque 3 (Butano)</h3>
+                            <div class="loading-status">
+                                <input type="checkbox" id="tank3Loading">
+                                <label for="tank3Loading">En Carga</label>
+                            </div>
+                        </div>
+                        <div class="tank-inputs">
+                            <div class="form-group">
+                                <label for="tank3Level">Nivel (cm)</label>
+                                <input type="number" id="tank3Level" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank3Pressure">PresiÃ³n (kg/cmÂ²)</label>
+                                <input type="number" id="tank3Pressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank3Temperature">Temperatura (Â°C)</label>
+                                <input type="number" id="tank3Temperature" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tank-group">
+                        <div class="tank-header">
+                            <h3>Tanque 4 (Butano)</h3>
+                            <div class="loading-status">
+                                <input type="checkbox" id="tank4Loading">
+                                <label for="tank4Loading">En Carga</label>
+                            </div>
+                        </div>
+                        <div class="tank-inputs">
+                            <div class="form-group">
+                                <label for="tank4Level">Nivel (cm)</label>
+                                <input type="number" id="tank4Level" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank4Pressure">PresiÃ³n (kg/cmÂ²)</label>
+                                <input type="number" id="tank4Pressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank4Temperature">Temperatura (Â°C)</label>
+                                <input type="number" id="tank4Temperature" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tank-group">
+                        <div class="tank-header">
+                            <h3>Tanque 5 (Propano)</h3>
+                            <div class="loading-status">
+                                <input type="checkbox" id="tank5Loading">
+                                <label for="tank5Loading">En Carga</label>
+                            </div>
+                        </div>
+                        <div class="tank-inputs">
+                            <div class="form-group">
+                                <label for="tank5Level">Nivel (cm)</label>
+                                <input type="number" id="tank5Level" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank5Pressure">PresiÃ³n (kg/cmÂ²)</label>
+                                <input type="number" id="tank5Pressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank5Temperature">Temperatura (Â°C)</label>
+                                <input type="number" id="tank5Temperature" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tank-group">
+                        <div class="tank-header">
+                            <h3>Tanque 6 (Propano)</h3>
+                            <div class="loading-status">
+                                <input type="checkbox" id="tank6Loading">
+                                <label for="tank6Loading">En Carga</label>
+                            </div>
+                        </div>
+                        <div class="tank-inputs">
+                            <div class="form-group">
+                                <label for="tank6Level">Nivel (cm)</label>
+                                <input type="number" id="tank6Level" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank6Pressure">PresiÃ³n (kg/cmÂ²)</label>
+                                <input type="number" id="tank6Pressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank6Temperature">Temperatura (Â°C)</label>
+                                <input type="number" id="tank6Temperature" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tank-group">
+                        <div class="tank-header">
+                            <h3>Tanque 7 (Gasolina)</h3>
+                            <div class="loading-status">
+                                <input type="checkbox" id="tank7Loading">
+                                <label for="tank7Loading">En Carga</label>
+                            </div>
+                        </div>
+                        <div class="tank-inputs">
+                            <div class="form-group">
+                                <label for="tank7Level">Nivel (cm)</label>
+                                <input type="number" id="tank7Level" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank7Pressure">PresiÃ³n (kg/cmÂ²)</label>
+                                <input type="number" id="tank7Pressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="tank7Temperature">Temperatura (Â°C)</label>
+                                <input type="number" id="tank7Temperature" step="any">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<div id="oilFields" style="display: none;">
+                <div class="oil-container">
+                    <div class="oil-group">
+                        <h3>MC#1</h3>
+                        <div class="oil-inputs">
+                            <div class="form-group">
+                                <label for="mc1MotorCm">Nivel Lado Motor (cm)</label>
+                                <input type="number" id="mc1MotorCm" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="mc1CompressorCm">Nivel Lado Compresor (cm)</label>
+                                <input type="number" id="mc1CompressorCm" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="oil-group">
+                        <h3>MC#2</h3>
+                        <div class="oil-inputs">
+                            <div class="form-group">
+                                <label for="mc2MotorCm">Nivel Lado Motor (cm)</label>
+                                <input type="number" id="mc2MotorCm" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="mc2CompressorCm">Nivel Lado Compresor (cm)</label>
+                                <input type="number" id="mc2CompressorCm" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="oil-group">
+                        <h3>MC#3</h3>
+                        <div class="oil-inputs">
+                            <div class="form-group">
+                                <label for="mc3MotorCm">Nivel Lado Motor (cm)</label>
+                                <input type="number" id="mc3MotorCm" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="mc3CompressorCm">Nivel Lado Compresor (cm)</label>
+                                <input type="number" id="mc3CompressorCm" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="oil-group">
+                        <h3>MC#5</h3>
+                        <div class="oil-inputs">
+                            <div class="form-group">
+                                <label for="mc5MotorCm">Nivel Lado Motor (cm)</label>
+                                <input type="number" id="mc5MotorCm" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="mc5CompressorCm">Nivel Lado Compresor (cm)</label>
+                                <input type="number" id="mc5CompressorCm" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="oil-group">
+                        <h3>MC#6</h3>
+                        <div class="oil-inputs">
+                            <div class="form-group">
+                                <label for="mc6MotorCm">Nivel Lado Motor (cm)</label>
+                                <input type="number" id="mc6MotorCm" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="mc6CompressorCm">Nivel Lado Compresor (cm)</label>
+                                <input type="number" id="mc6CompressorCm" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="oil-group">
+                        <h3>RC#4</h3>
+                        <div class="oil-inputs">
+                            <div class="form-group">
+                                <label for="rc4MotorCm">Nivel Lado Motor (cm)</label>
+                                <input type="number" id="rc4MotorCm" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="rc4CompressorCm">Nivel Lado Compresor (cm)</label>
+                                <input type="number" id="rc4CompressorCm" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="oil-group">
+                        <h3>RC#7</h3>
+                        <div class="oil-inputs">
+                            <div class="form-group">
+                                <label for="rc7MotorCm">Nivel Lado Motor (cm)</label>
+                                <input type="number" id="rc7MotorCm" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="rc7CompressorCm">Nivel Lado Compresor (cm)</label>
+                                <input type="number" id="rc7CompressorCm" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="oil-group">
+                        <h3>RC#8</h3>
+                        <div class="oil-inputs">
+                            <div class="form-group">
+                                <label for="rc8MotorCm">Nivel Lado Motor (cm)</label>
+                                <input type="number" id="rc8MotorCm" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="rc8CompressorCm">Nivel Lado Compresor (cm)</label>
+                                <input type="number" id="rc8CompressorCm" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="oil-group">
+                        <h3>RC#9</h3>
+                        <div class="oil-inputs">
+                            <div class="form-group">
+                                <label for="rc9OilLevel">Nivel de Aceite (cm)</label>
+                                <input type="number" id="rc9OilLevel" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="oil-group">
+                        <h3>Cisterna de Aceite</h3>
+                        <div class="oil-inputs">
+                            <div class="form-group">
+                                <label for="oilTankLevel">Nivel de Cisterna de Aceite (cm)</label>
+                                <input type="number" id="oilTankLevel" step="any">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<div id="turboExpanderFields" style="display: none;">
+                <div class="form-group">
+                    <label for="tagNumberTurbo">NÃºmero de TAG</label>
+                    <input type="text" id="tagNumberTurbo">
+                </div>
+
+                <div class="form-group">
+                    <label for="priorityTurbo">Prioridad</label>
+                    <select id="priorityTurbo">
+                        <option value="">Seleccione prioridad</option>
+                        <option value="Urgente">Urgente - ventana de ejecuciÃ³n: Inmediato</option>
+                        <option value="Alta">Alta - ventana de ejecuciÃ³n: 2 dÃ­as a 2 semanas</option>
+                        <option value="Media">Media - ventana de ejecuciÃ³n: 2 semanas a 2 meses</option>
+                        <option value="Paro de Planta">Paro de Planta - ventana de ejecuciÃ³n: Parada de Planta</option>
+                        <option value="Bajo">Bajo - ventana de ejecuciÃ³n: > 2 meses</option>
+                        <option value="Plan de Mantenimiento">Plan de Mantenimiento - ventana de ejecuciÃ³n: Plan de Mantenimiento</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="locationTurbo">UbicaciÃ³n</label>
+                    <input type="text" id="locationTurbo">
+                </div>
+
+                <div class="form-group">
+                    <label for="turboStatus">Estado del Equipo</label>
+                    <select id="turboStatus">
+                        <option value="">Seleccione el estado</option>
+                        <option value="En Servicio">En Servicio</option>
+                        <option value="Fuera de Servicio">Fuera de Servicio</option>
+                        <option value="En Mantenimiento">En Mantenimiento</option>
+                        <option value="Stand by">Stand by</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="turboOilLoad">Carga de Aceite (litros)</label>
+                    <input type="number" id="turboOilLoad" step="any">
+                </div>
+
+                <div class="form-group">
+                    <label for="turboObservations">Observaciones</label>
+                    <textarea id="turboObservations"></textarea>
+                </div>
+
+                <div class="form-group photo-container">
+                    <label>FotografÃ­as (mÃ¡ximo 3)</label>
+                    <button type="button" class="photo-btn" onclick="app.takePhoto('turbo')">ðŸ"· Tomar Foto</button>
+                    <input type="file" id="turboPhotoInput" accept="image/*" capture="camera" multiple style="display: none;">
+                    <div id="turboPhotoPreview" class="photo-preview"></div>
+                </div>
+            </div>
+
+            <div id="propaneCompressorFields" style="display: none;">
+                <div class="form-group">
+                    <label for="tagNumberPropane">NÃºmero de TAG</label>
+                    <input type="text" id="tagNumberPropane">
+                </div>
+
+                <div class="form-group">
+                    <label for="priorityPropane">Prioridad</label>
+                    <select id="priorityPropane">
+                        <option value="">Seleccione prioridad</option>
+                        <option value="Urgente">Urgente - ventana de ejecuciÃ³n: Inmediato</option>
+                        <option value="Alta">Alta - ventana de ejecuciÃ³n: 2 dÃ­as a 2 semanas</option>
+                        <option value="Media">Media - ventana de ejecuciÃ³n: 2 semanas a 2 meses</option>
+                        <option value="Paro de Planta">Paro de Planta - ventana de ejecuciÃ³n: Parada de Planta</option>
+                        <option value="Bajo">Bajo - ventana de ejecuciÃ³n: > 2 meses</option>
+                        <option value="Plan de Mantenimiento">Plan de Mantenimiento - ventana de ejecuciÃ³n: Plan de Mantenimiento</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="locationPropane">UbicaciÃ³n</label>
+                    <input type="text" id="locationPropane">
+                </div>
+
+                <div class="form-group">
+                    <label for="propaneStatus">Estado del Equipo</label>
+                    <select id="propaneStatus">
+                        <option value="">Seleccione el estado</option>
+                        <option value="En Servicio">En Servicio</option>
+                        <option value="Fuera de Servicio">Fuera de Servicio</option>
+                        <option value="En Mantenimiento">En Mantenimiento</option>
+                        <option value="Stand by">Stand by</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="propaneOilLoad">Carga de Aceite (litros)</label>
+                    <input type="number" id="propaneOilLoad" step="any">
+                </div>
+
+                <div class="form-group">
+                    <label for="propaneObservations">Observaciones</label>
+                    <textarea id="propaneObservations"></textarea>
+                </div>
+
+                <div class="form-group photo-container">
+                    <label>FotografÃ­as (mÃ¡ximo 3)</label>
+                    <button type="button" class="photo-btn" onclick="app.takePhoto('propane')">ðŸ"· Tomar Foto</button>
+                    <input type="file" id="propanePhotoInput" accept="image/*" capture="camera" multiple style="display: none;">
+                    <div id="propanePhotoPreview" class="photo-preview"></div>
+                </div>
+            </div>
+			<div id="frickFields" style="display: none;">
+                <div class="frick-container">
+                    <div class="form-group">
+                        <label for="frickEquipment">Equipo</label>
+                        <select id="frickEquipment" required>
+                            <option value="">Seleccione el equipo</option>
+                            <option value="Frick K-401A">Frick K-401A</option>
+                            <option value="Frick K-401B">Frick K-401B</option>
+                        </select>
+                    </div>
+
+                    <div class="frick-group">
+                        <div class="frick-inputs">
+                            <div class="form-group">
+                                <label for="frickSuctionPressure">PresiÃ³n de SucciÃ³n (Bar)</label>
+                                <input type="number" id="frickSuctionPressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="frickSuctionTemp">Temperatura de SucciÃ³n (Â°C)</label>
+                                <input type="number" id="frickSuctionTemp" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="frickDischargePressure">PresiÃ³n de Descarga (Bar)</label>
+                                <input type="number" id="frickDischargePressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="frickDischargeTemp">Temperatura de Descarga (Â°C)</label>
+                                <input type="number" id="frickDischargeTemp" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="frickOilPressure">PresiÃ³n de Aceite Compresor (Bar)</label>
+                                <input type="number" id="frickOilPressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="frickOilTemp">Temperatura de Aceite Compresor (Â°C)</label>
+                                <input type="number" id="frickOilTemp" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="frickFilterDifferential">Diferencial del Filtro (Bar)</label>
+                                <input type="number" id="frickFilterDifferential" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="frickSeparatorTemp">Temperatura de Separador (Â°C)</label>
+                                <input type="number" id="frickSeparatorTemp" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="frickMotorAmps">Ampers Motor (Amp)</label>
+                                <input type="number" id="frickMotorAmps" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="frickMaxAmpsPercent">MÃ¡xima carga Ampers Motor FLA (%)</label>
+                                <input type="number" id="frickMaxAmpsPercent" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="frickMotorKW">Kilowatts del Motor (KW)</label>
+                                <input type="number" id="frickMotorKW" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="frickSlipCapacity">Capacidad de Deslizamiento (%)</label>
+                                <input type="number" id="frickSlipCapacity" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="frickSlipVolume">Volumen de Deslizamiento (%)</label>
+                                <input type="number" id="frickSlipVolume" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="frickFlow">Caudal (MÂ³/dÃ­a)</label>
+                                <input type="number" id="frickFlow" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="frickAmbientTemp">Temperatura Ambiente (Â°C)</label>
+                                <input type="number" id="frickAmbientTemp" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="frickWorkingHours">Horas Trabajo Motor (Hs)</label>
+                                <input type="number" id="frickWorkingHours" step="any">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<div id="rciFields" style="display: none;">
+                <div class="rci-container">
+                    <div class="rci-group">
+                        <h3>P-402 ELECTROBOMBA 120 m3</h3>
+                        <div class="rci-inputs">
+                            <div class="form-group">
+                                <label for="p402SuctionPressure">P succiÃ³n (kg/cmÂ²)</label>
+                                <input type="number" id="p402SuctionPressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="p402DischargePressure">P descarga (kg/cmÂ²)</label>
+                                <input type="number" id="p402DischargePressure" step="any">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="p402Observations">Observaciones</label>
+                                <textarea id="p402Observations"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rci-group">
+                        <h3>P-401 ELECTROBOMBA 500 m3</h3>
+                        <div class="rci-inputs">
+                            <div class="form-group">
+                                <label for="p401SuctionPressure">P succiÃ³n (kg/cmÂ²)</label>
+                                <input type="number" id="p401SuctionPressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="p401DischargePressure">P descarga (kg/cmÂ²)</label>
+                                <input type="number" id="p401DischargePressure" step="any">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="p401Observations">Observaciones</label>
+                                <textarea id="p401Observations"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rci-group">
+                        <h3>P-401 B MOTOBOMBA VOLVO</h3>
+                        <div class="rci-inputs">
+                            <div class="form-group">
+                                <label for="p401bSuctionPressure">P succiÃ³n (kg/cmÂ²)</label>
+                                <input type="number" id="p401bSuctionPressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="p401bDischargePressure">P descarga (kg/cmÂ²)</label>
+                                <input type="number" id="p401bDischargePressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="p401bOilPressure">P aceite (PSI)</label>
+                                <input type="number" id="p401bOilPressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="p401bCoolantTemp">TÂ° refrigerante (Â°C)</label>
+                                <input type="number" id="p401bCoolantTemp" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="p401bRPM">RPM</label>
+                                <input type="number" id="p401bRPM" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="p401bAmbientTemp">T ambiente (Â°C)</label>
+                                <input type="number" id="p401bAmbientTemp" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="p401bCurrent1">Corriente1 (Amp)</label>
+                                <input type="number" id="p401bCurrent1" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="p401bVoltage1">Voltaje1 (Volt)</label>
+                                <input type="number" id="p401bVoltage1" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="p401bCurrent2">Corriente2 (Amp)</label>
+                                <input type="number" id="p401bCurrent2" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="p401bVoltage2">Voltaje2 (Volt)</label>
+                                <input type="number" id="p401bVoltage2" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="p401bFuelLevel">Nivel de Gas Oil (lts)</label>
+                                <input type="number" id="p401bFuelLevel" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="p401bCoolantLevel">Nivel de Refrigerante ok?</label>
+                                <select id="p401bCoolantLevel">
+                                    <option value="">Seleccione</option>
+                                    <option value="SÃ­">SÃ­</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="p401bOilLevel">Nivel de Aceite ok?</label>
+                                <select id="p401bOilLevel">
+                                    <option value="">Seleccione</option>
+                                    <option value="SÃ­">SÃ­</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="p401bObservations">Observaciones</label>
+                                <textarea id="p401bObservations"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rci-group">
+                        <h3>MOTOBOMBA CUMMINS</h3>
+                        <div class="rci-inputs">
+                            <div class="form-group">
+                                <label for="cumminsDischargePressure">P descarga (kg/cmÂ²)</label>
+                                <input type="number" id="cumminsDischargePressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="cumminsOilPressure">P aceite (kg/cmÂ²)</label>
+                                <input type="number" id="cumminsOilPressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="cumminsCoolantTemp">TÂ° Refrigerante (Â°C)</label>
+                                <input type="number" id="cumminsCoolantTemp" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="cumminsHourMeter">HorÃ³metro (hr)</label>
+                                <input type="number" id="cumminsHourMeter" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="cumminsBatteryCurrent">Corriente en Cargador BaterÃ­a (Amp)</label>
+                                <input type="number" id="cumminsBatteryCurrent" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="cumminsFuelLevel">Nivel de Gas Oil (lts)</label>
+                                <input type="number" id="cumminsFuelLevel" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="cumminsRPM">RPM</label>
+                                <input type="number" id="cumminsRPM" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="cumminsCoolantLevel">Nivel de Refrigerante ok?</label>
+                                <select id="cumminsCoolantLevel">
+                                    <option value="">Seleccione</option>
+                                    <option value="SÃ­">SÃ­</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cumminsOilLevel">Nivel de Aceite ok?</label>
+                                <select id="cumminsOilLevel">
+                                    <option value="">Seleccione</option>
+                                    <option value="SÃ­">SÃ­</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="cumminsObservations">Observaciones</label>
+                                <textarea id="cumminsObservations"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rci-group">
+                        <h3>MOTOBOMBA HIDRO-FRAC</h3>
+                        <div class="rci-inputs">
+                            <div class="form-group">
+                                <label for="hidroFracSuctionPressure">P succiÃ³n (Kg/cmÂ²)</label>
+                                <input type="number" id="hidroFracSuctionPressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="hidroFracDischargePressure">P descarga (Kg/cmÂ²)</label>
+                                <input type="number" id="hidroFracDischargePressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="hidroFracRefrigerantLevel">Nivel de Refrigerante ok?</label>
+                                <select id="hidroFracRefrigerantLevel">
+                                    <option value="">Seleccione</option>
+                                    <option value="SÃ­">SÃ­</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="hidroFracOilLevel">Nivel de Aceite ok?</label>
+                                <select id="hidroFracOilLevel">
+                                    <option value="">Seleccione</option>
+                                    <option value="SÃ­">SÃ­</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="hidroFracObservations">Observaciones</label>
+                                <textarea id="hidroFracObservations"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rci-group">
+                        <h3>EQUIPAMIENTOS ADICIONALES</h3>
+                        <div class="rci-inputs">
+                            <div class="form-group full-width">
+                                <label for="additionalObservations">Observaciones de hidrantes, mangueras y otros equipamientos</label>
+                                <textarea id="additionalObservations"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rci-group">
+                        <h3>TK-401A</h3>
+                        <div class="rci-inputs">
+                            <div class="form-group">
+                                <label for="tk401aLevel">Nivel (m)</label>
+                                <input type="number" id="tk401aLevel" step="any">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rci-group">
+                        <h3>Tanque Australiano</h3>
+                        <div class="rci-inputs">
+                            <div class="form-group">
+                                <label for="tanqueAustralianoLevel">Nivel (%)</label>
+                                <input type="number" id="tanqueAustralianoLevel" step="any">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group photo-container">
+                    <label>FotografÃ­as (mÃ¡ximo 6)</label>
+                    <button type="button" class="photo-btn" onclick="app.takePhoto('rci')">ðŸ"· Tomar Foto</button>
+                    <input type="file" id="rciPhotoInput" accept="image/*" capture="camera" multiple style="display: none;">
+                    <div id="rciPhotoPreview" class="photo-preview"></div>
+                </div>
+            </div>
+
+            <!-- NUEVA SECCIÓN DE MOTOCOMPRESORES CON TODOS LOS CAMPOS SOLICITADOS -->
+			<div id="compressorFields" style="display: none;">
+                <div class="compressor-container">
+                    <div class="compressor-group">
+                        <h3>Datos Motocompresores</h3>
+                        <div class="compressor-inputs">
+                            <!-- PI5107 y FI5107 -->
+                            <div class="form-group">
+                                <label for="pi5107SuctionPressure">PI5107 Presión de succión DCS</label>
+                                <input type="number" id="pi5107SuctionPressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="fi5107LowPressureGasFlow">FI5107 Caudal gas en baja presión</label>
+                                <input type="number" id="fi5107LowPressureGasFlow" step="any">
+                            </div>
+                            
+                            <!-- Presiones básicas -->
+                            <div class="form-group">
+                                <label for="suctionPressure">Presión de Succión</label>
+                                <input type="number" id="suctionPressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="discharge1stStage">Presión descarga 1° etapa</label>
+                                <input type="number" id="discharge1stStage" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="discharge2ndStage">Presión descarga 2° etapa</label>
+                                <input type="number" id="discharge2ndStage" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="discharge3rdStage">Presión descarga 3° etapa</label>
+                                <input type="number" id="discharge3rdStage" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="motorOilPressure">Presión Aceite Motor</label>
+                                <input type="number" id="motorOilPressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="compressorOilPressure">Presión aceite Compresor</label>
+                                <input type="number" id="compressorOilPressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="mainRefrigerantPressure">Presión refrigerante Sist. Principal</label>
+                                <input type="number" id="mainRefrigerantPressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="auxRefrigerantPressure">Presión refrigerante Sist. Aux</label>
+                                <input type="number" id="auxRefrigerantPressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="airManifoldPressureLeft">Presión manifold de aire Bco.Izq</label>
+                                <input type="number" id="airManifoldPressureLeft" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="carterPressure">Presión Carter</label>
+                                <input type="number" id="carterPressure" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="airManifoldPressureRight">Presión manifold de aire Bco.Der</label>
+                                <input type="number" id="airManifoldPressureRight" step="any">
+                            </div>
+                            
+                            <!-- Vibraciones -->
+                            <div class="form-group">
+                                <label for="motorCouplingVibration">Vibración Motor Lado Acople</label>
+                                <input type="number" id="motorCouplingVibration" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="motorFreeVibration">Vibración Motor Lado Libre</label>
+                                <input type="number" id="motorFreeVibration" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="compressorCouplingVibration">Vibración Compresor Lado Acople</label>
+                                <input type="number" id="compressorCouplingVibration" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="compressorFreeVibration">Vibración Compresor Lado Libre</label>
+                                <input type="number" id="compressorFreeVibration" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="coolerVibration">Vibración Cooler</label>
+                                <input type="number" id="coolerVibration" step="any">
+                            </div>
+                            
+                            <!-- Temperaturas de refrigerante y aceite -->
+                            <div class="form-group">
+                                <label for="mainRefrigerantTemp">Temperatura Refigerante Sist.Principal</label>
+                                <input type="number" id="mainRefrigerantTemp" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="auxRefrigerantTemp">Temperatura Refigerante Sist.Auxiliar</label>
+                                <input type="number" id="auxRefrigerantTemp" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="compressorOilTemp">Temperatura Aceite Compresor</label>
+                                <input type="number" id="compressorOilTemp" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="motorOilTemp">Temperatura Aceite Motor</label>
+                                <input type="number" id="motorOilTemp" step="any">
+                            </div>
+                            
+                            <!-- Temperaturas de descarga por cilindro/throw -->
+                            <div class="form-group">
+                                <label for="compressorDischargeTemp1">Temperatura desc. Compresor Throw #1</label>
+                                <input type="number" id="compressorDischargeTemp1" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="compressorDischargeTemp2">Temperatura desc. Compresor Throw #2</label>
+                                <input type="number" id="compressorDischargeTemp2" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="compressorDischargeTemp3">Temperatura desc. Compresor Throw #3</label>
+                                <input type="number" id="compressorDischargeTemp3" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="compressorDischargeTemp4">Temperatura desc. Compresor Throw #4</label>
+                                <input type="number" id="compressorDischargeTemp4" step="any">
+                            </div>
+                            
+                            <!-- Temperaturas de cojinetes bancada motor -->
+                            <div class="form-group">
+                                <label for="motorBearingTemp1">Temperatura Cojinete Bancada Motor #1</label>
+                                <input type="number" id="motorBearingTemp1" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="motorBearingTemp2">Temperatura Cojinete Bancada Motor #2</label>
+                                <input type="number" id="motorBearingTemp2" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="motorBearingTemp3">Temperatura Cojinete Bancada Motor #3</label>
+                                <input type="number" id="motorBearingTemp3" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="motorBearingTemp4">Temperatura Cojinete Bancada Motor #4</label>
+                                <input type="number" id="motorBearingTemp4" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="motorBearingTemp5">Temperatura Cojinete Bancada Motor #5</label>
+                                <input type="number" id="motorBearingTemp5" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="motorBearingTemp6">Temperatura Cojinete Bancada Motor #6</label>
+                                <input type="number" id="motorBearingTemp6" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="motorBearingTemp7">Temperatura Cojinete Bancada Motor #7</label>
+                                <input type="number" id="motorBearingTemp7" step="any">
+                            </div>
+                            
+                            <!-- Temperaturas turbo y succión -->
+                            <div class="form-group">
+                                <label for="turboInletTempLeft">Temperatura entrada Turbo Bco. Izq.</label>
+                                <input type="number" id="turboInletTempLeft" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="turboInletTempRight">Temperatura entrada Turbo Bco. Der.</label>
+                                <input type="number" id="turboInletTempRight" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="suctionTemp">Temperatura Succión</label>
+                                <input type="number" id="suctionTemp" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="ambientTemp">Temperatura Ambiente</label>
+                                <input type="number" id="ambientTemp" step="any">
+                            </div>
+                            
+                            <!-- Temperaturas de escape por cilindro -->
+                            <div class="form-group">
+                                <label for="exhaustTemp1">Temperatura Escape cilindro #1</label>
+                                <input type="number" id="exhaustTemp1" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="exhaustTemp2">Temperatura Escape cilindro #2</label>
+                                <input type="number" id="exhaustTemp2" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="exhaustTemp3">Temperatura Escape cilindro #3</label>
+                                <input type="number" id="exhaustTemp3" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="exhaustTemp4">Temperatura Escape cilindro #4</label>
+                                <input type="number" id="exhaustTemp4" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="exhaustTemp5">Temperatura Escape cilindro #5</label>
+                                <input type="number" id="exhaustTemp5" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="exhaustTemp6">Temperatura Escape cilindro #6</label>
+                                <input type="number" id="exhaustTemp6" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="exhaustTemp7">Temperatura Escape cilindro #7</label>
+                                <input type="number" id="exhaustTemp7" step="any">
